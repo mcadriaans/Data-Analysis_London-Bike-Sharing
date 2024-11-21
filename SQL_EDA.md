@@ -91,9 +91,20 @@ FROM(
 WHERE rnk = 1;
 ```
 ![image](https://github.com/user-attachments/assets/6b0377e7-6406-4eeb-98dd-dcf759fde30d)
+### 5. Show the minimum, average and maximum actual daily temperatures.
+```sql
+SELECT
+	timestamp::DATE AS bs_date,
+	MIN(t1) AS min_daily_temp,
+	ROUND(AVG(t1):: NUMERIC, 1) AS avg_daily_temp,
+	MAX(t1) AS max_daily_temp
+FROM bike_sharing
+GROUP BY 1
+ORDER BY 1;
+```
+![image](https://github.com/user-attachments/assets/e446d67a-86f2-4105-b206-326dc31b4797)
 
-
-### 5. Find the 7-day moving average for total bike rentals
+### 6. Find the 7-day moving average for total bike rentals
 ```sql
 WITH daily_rentals AS(
 SELECT
