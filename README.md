@@ -52,8 +52,8 @@ The data was acquired from 3 sources:
 
 ## Key Findings 
 
-> *   Peak usage times are during weekdays, particularly during commute hours.
-> *   Members tend to take longer trips than casual users.
-> *   Certain stations are consistently more popular than others.
+> *   Bike shares peak during commute times (8 AM and 5 PM) and on weekdays, with Thursday being the busiest day. Weekday usage significantly outnumbers weekends and holidays.
+> *   Factors: weather condition, temperature and season are strong drivers for Bike shares.
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
