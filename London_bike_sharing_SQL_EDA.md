@@ -177,3 +177,30 @@ FROM day_type_rental_counts;
 ```
 ![image](https://github.com/user-attachments/assets/f9e689f7-1094-4b24-8281-a6c44b641ffc)
 
+
+### 9. Write a query to classify the days into "High Traffic" (if cnt > 90th percentile), "Medium Traffic" (between 50th and 90th percentile), and "Low Traffic" (below the 50th percentile).What percentage of the dataset falls in the high traffic category?
+```sql
+WITH percentile AS (
+  SELECT 
+    PERCENTILE_CONT(0.50) WITHIN GROUP (ORDER BY cnt) AS pctile_50,
+    PERCENTILE_CONT(0.90) WITHIN GROUP (ORDER BY cnt) AS pctile_90
+  FROM bike_sharing
+)
+SELECT 
+ ROUND(
+   (SELECT 
+     COUNT(*) 
+   FROM (
+     SELECT
+       timestamp :: date AS dt,
+       cnt,
+       CASE
+         WHEN cnt > (SELECT pctile_90 FROM percentile) THEN 'High Traffic'
+         WHEN cnt <= (SELECT pctile_50 FROM percentile) THEN 'Low Traffic'
+         ELSE 'Medium Traffic'
+       END AS traffic_lvl
+       FROM bike_sharing
+       ) AS traffic_data
+       WHERE traffic_lvl = 'High Traffic')::numeric / (SELECT COUNT(*) FROM bike_sharing)::numeric * 100, 3) AS high_traffic_percentage;
+```
+![image](https://github.com/user-attachments/assets/a383b720-3f67-497b-bafe-a6309773859a)
